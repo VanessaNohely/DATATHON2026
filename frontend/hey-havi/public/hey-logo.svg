@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 32" fill="none">
+  <rect x="0" y="0" width="32" height="32" rx="8" fill="#FF3D55"/>
+  <text x="16" y="22" font-family="Inter,sans-serif" font-weight="800"
+        font-size="16" fill="white" text-anchor="middle">H</text>
+  <text x="48" y="23" font-family="Inter,sans-serif" font-weight="700"
+        font-size="18" fill="#F5F5F7">hey</text>
+  <text x="85" y="23" font-family="Inter,sans-serif" font-weight="400"
+        font-size="11" fill="#5C5C72">banco</text>
+</svg>

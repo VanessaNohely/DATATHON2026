@@ -1,0 +1,25 @@
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+}
+
+.chip {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+
+  &:hover {
+    background: var(--hey-coral-muted);
+    border-color: var(--hey-coral);
+    color: var(--hey-coral-light);
+    transform: translateY(-1px);
+  }
+}

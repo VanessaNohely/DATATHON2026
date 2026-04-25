@@ -1,0 +1,35 @@
+.recs {
+  &__title {
+    font-size: 14px; font-weight: 700;
+    margin-bottom: var(--space-md);
+  }
+  &__list { display: flex; flex-direction: column; gap: var(--space-sm); }
+}
+
+.rec-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition);
+
+  &:hover { border-color: var(--hey-coral); }
+
+  &__icon { font-size: 24px; flex-shrink: 0; }
+  &__body { flex: 1; }
+  &__product {
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--hey-coral); margin-bottom: 2px;
+  }
+  &__title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+  &__desc  { font-size: 11px; color: var(--text-muted); }
+
+  &__cta {
+    padding: 6px 12px; font-size: 11px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+}

@@ -1,0 +1,25 @@
+@if (ctx.profile(); as p) {
+  <div class="spending fade-in-up">
+    <div class="spending__header">
+      <p class="spending__title">Gastos del mes</p>
+      <span class="badge badge--coral">{{ p.credit_profile }}</span>
+    </div>
+
+    <div class="spending__bars">
+      @for (cat of p.spending_summary; track cat.category) {
+        <div class="cat-row">
+          <span class="cat-row__icon">{{ cat.icon }}</span>
+          <div class="cat-row__body">
+            <div class="cat-row__top">
+              <span class="cat-row__name">{{ cat.category }}</span>
+              <span class="cat-row__amount">{{ cat.amount | currency:'MXN':'symbol-narrow':'1.0-0' }}</span>
+            </div>
+            <div class="cat-row__track">
+              <div class="cat-row__fill" [style.width.%]="cat.percentage"></div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+}

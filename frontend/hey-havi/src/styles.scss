@@ -1,0 +1,148 @@
+// ─────────────────────────────────────────────────────────────
+// HEY BANCO — Design Tokens & Global Styles
+// ─────────────────────────────────────────────────────────────
+
+// ── Brand colors (theme-independent) ─────────────────────────
+:root {
+  --hey-coral:        #FF3D55;
+  --hey-coral-dark:   #E02444;
+  --hey-coral-light:  #FF6B7A;
+  --hey-coral-muted:  rgba(255, 61, 85, 0.12);
+
+  --bg-base:          #0C0C0E;
+  --bg-surface:       #151518;
+  --bg-card:          #1C1C21;
+  --bg-card-hover:    #24242B;
+  --bg-input:         #222228;
+
+  --text-primary:     #F5F5F7;
+  --text-secondary:   #A0A0B0;
+  --text-muted:       #5C5C72;
+
+  --success:          #1DB87E;
+  --success-muted:    rgba(29, 184, 126, 0.12);
+  --warning:          #F5A623;
+  --warning-muted:    rgba(245, 166, 35, 0.12);
+  --danger:           #FF3D55;
+  --danger-muted:     rgba(255, 61, 85, 0.12);
+  --info:             #3B9EFF;
+  --info-muted:       rgba(59, 158, 255, 0.12);
+
+  --border:           rgba(255,255,255,0.07);
+  --border-strong:    rgba(255,255,255,0.14);
+
+  --radius-sm:   8px;
+  --radius-md:   14px;
+  --radius-lg:   20px;
+  --radius-xl:   28px;
+  --radius-full: 9999px;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --shadow-card:  0 2px 20px rgba(0,0,0,0.4);
+  --shadow-float: 0 8px 40px rgba(0,0,0,0.6);
+  --transition: 0.18s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: var(--radius-full); }
+
+h1,h2,h3,h4 { font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; }
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: var(--radius-full);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.03em;
+  &--coral   { background: var(--hey-coral-muted);  color: var(--hey-coral-light); }
+  &--success { background: var(--success-muted);    color: var(--success); }
+  &--warning { background: var(--warning-muted);    color: var(--warning); }
+  &--danger  { background: var(--danger-muted);     color: var(--danger); }
+  &--info    { background: var(--info-muted);        color: var(--info); }
+}
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--space-sm); padding: 10px 20px;
+  border-radius: var(--radius-full); font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: all var(--transition); border: none; outline: none;
+  &--primary {
+    background: var(--hey-coral); color: #fff;
+    &:hover { background: var(--hey-coral-dark); transform: translateY(-1px); }
+  }
+  &--ghost {
+    background: transparent; color: var(--text-secondary);
+    border: 1px solid var(--border-strong);
+    &:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  }
+  &--icon {
+    width: 40px; height: 40px; padding: 0;
+    background: var(--bg-card); border: 1px solid var(--border);
+    color: var(--text-secondary); font-size: 18px;
+    &:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+  }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+@keyframes spin  { to { transform: rotate(360deg); } }
+.fade-in-up { animation: fadeInUp 0.3s ease both; }
+
+// ── Smooth theme transition ───────────────────────────────────
+html { transition: background-color 0.25s ease, color 0.25s ease; }
+
+// ── LIGHT MODE ───────────────────────────────────────────────
+[data-theme="light"] {
+  --bg-base:       #F5F5F7;
+  --bg-surface:    #FFFFFF;
+  --bg-card:       #FFFFFF;
+  --bg-card-hover: #F0F0F5;
+  --bg-input:      #F0F0F5;
+
+  --text-primary:   #0C0C0E;
+  --text-secondary: #4A4A5A;
+  --text-muted:     #9090A0;
+
+  --border:        rgba(0,0,0,0.08);
+  --border-strong: rgba(0,0,0,0.14);
+
+  --success-muted:  rgba(29, 184, 126, 0.10);
+  --warning-muted:  rgba(245, 166, 35, 0.12);
+  --danger-muted:   rgba(255, 61, 85, 0.10);
+  --info-muted:     rgba(59, 158, 255, 0.10);
+  --hey-coral-muted: rgba(255, 61, 85, 0.10);
+
+  --shadow-card:  0 2px 12px rgba(0,0,0,0.08);
+  --shadow-float: 0 8px 32px rgba(0,0,0,0.14);
+
+  // Cards get a subtle border on light mode
+  .card { box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+}

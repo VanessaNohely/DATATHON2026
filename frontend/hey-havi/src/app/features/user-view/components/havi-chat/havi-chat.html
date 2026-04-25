@@ -1,0 +1,42 @@
+<div class="chat fade-in-up">
+  <div class="chat__header">
+    <div class="chat__avatar">H</div>
+    <div class="chat__info">
+      <p class="chat__name">Havi</p>
+      <span class="chat__status">
+        @if (isTyping()) { <span class="chat__typing">escribiendo...</span> }
+        @else { <span class="chat__online">● En línea</span> }
+      </span>
+    </div>
+  </div>
+
+  <div class="chat__messages" #messagesContainer>
+    @for (msg of messages(); track msg.id) {
+      <app-message-bubble [message]="msg" />
+    }
+  </div>
+
+  <div class="chat__footer">
+    <app-suggested-chips
+      [chips]="suggestions()"
+      (selected)="onChipSelected($event)" />
+
+    <div class="chat__input-row">
+      <input
+        class="chat__input"
+        type="text"
+        placeholder="Escríbele a Havi..."
+        [ngModel]="inputText()"
+        (ngModelChange)="inputText.set($event)"
+        (keydown)="onKeydown($event)"
+        [disabled]="isTyping()"
+        autocomplete="off" />
+      <button
+        class="btn btn--primary chat__send"
+        (click)="send()"
+        [disabled]="!inputText().trim() || isTyping()">
+        ↑
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="bubble" [class.bubble--user]="message().role === 'user'"
+                    [class.bubble--assistant]="message().role === 'assistant'">
+  @if (message().role === 'assistant') {
+    <div class="bubble__avatar">
+      <span>H</span>
+    </div>
+  }
+  <div class="bubble__content">
+    @if (message().isLoading) {
+      <div class="bubble__dots">
+        <span></span><span></span><span></span>
+      </div>
+    } @else {
+      <p class="bubble__text">{{ message().content }}</p>
+      <span class="bubble__time">{{ message().timestamp | date:'HH:mm' }}</span>
+    }
+  </div>
+</div>

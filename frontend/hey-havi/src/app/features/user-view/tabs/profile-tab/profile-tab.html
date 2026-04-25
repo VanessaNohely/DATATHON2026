@@ -1,0 +1,73 @@
+@if (ctx.profile(); as p) {
+  <div class="ptab fade-in-up">
+
+    <!-- Identity -->
+    <div class="card ptab__identity">
+      <div class="ptab__avatar">{{ p.segment_emoji }}</div>
+      <h2 class="ptab__name">{{ p.name || p.user_id }}</h2>
+      <p class="ptab__segment">{{ p.segment_name }}</p>
+      <div class="ptab__badges">
+        <span class="badge badge--coral">{{ p.credit_profile }}</span>
+        <span class="badge badge--info">Cluster {{ p.cluster_id }}</span>
+      </div>
+    </div>
+
+    <!-- Financial Persona -->
+    <div class="card">
+      <p class="ptab__section-title">Financial Persona</p>
+      <div class="ptab__dims">
+        @for (dim of dimensions; track dim.key) {
+          <div class="ptab__dim">
+            <span class="ptab__dim-icon">{{ dim.icon }}</span>
+            <div class="ptab__dim-body">
+              <span class="ptab__dim-label">{{ dim.label }}</span>
+              <span class="ptab__dim-value ptab__dim-value--{{ dim.colorClass }}">{{ getVal(dim.key) }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Key stats -->
+    <div class="card">
+      <p class="ptab__section-title">Métricas clave</p>
+      <div class="ptab__metrics">
+        <div class="metric">
+          <span class="metric__val">{{ p.features.score_buro }}</span>
+          <span class="metric__lbl">Score buró</span>
+        </div>
+        <div class="metric">
+          <span class="metric__val">{{ p.features.satisfaccion }}/10</span>
+          <span class="metric__lbl">Satisfacción</span>
+        </div>
+        <div class="metric">
+          <span class="metric__val">{{ p.features.antiguedad_dias }}d</span>
+          <span class="metric__lbl">Antigüedad</span>
+        </div>
+        <div class="metric">
+          <span class="metric__val" [class.text-success]="p.features.es_hey_pro">
+            {{ p.features.es_hey_pro ? 'Activo' : 'Inactivo' }}
+          </span>
+          <span class="metric__lbl">Hey Pro</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top topics -->
+    <div class="card">
+      <p class="ptab__section-title">Tópicos conversacionales</p>
+      <div class="ptab__topics">
+        @for (t of p.top_topics; track t.topic) {
+          <div class="topic-row">
+            <span class="topic-row__name">{{ t.topic.replace('_', ' ') }}</span>
+            <div class="topic-row__track">
+              <div class="topic-row__fill" [style.width.%]="t.weight * 100"></div>
+            </div>
+            <span class="topic-row__pct">{{ (t.weight * 100).toFixed(0) }}%</span>
+          </div>
+        }
+      </div>
+    </div>
+
+  </div>
+}

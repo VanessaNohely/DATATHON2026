@@ -1,0 +1,25 @@
+<div class="home fade-in-up">
+  @if (ctx.alerts().length) {
+    <section class="home__section">
+      <app-alerts-banner />
+    </section>
+  }
+
+  @if (ctx.profile(); as p) {
+    <section class="home__section">
+      <p class="home__section-title">Productos activos</p>
+      <div class="products">
+        @for (prod of p.productos_activos; track prod) {
+          <div class="product-chip">
+            <span class="product-chip__icon">{{ prodIcon(prod) }}</span>
+            <span class="product-chip__name">{{ prodLabel(prod) }}</span>
+          </div>
+        }
+      </div>
+    </section>
+  }
+
+  <section class="home__section">
+    <app-recommendations />
+  </section>
+</div>

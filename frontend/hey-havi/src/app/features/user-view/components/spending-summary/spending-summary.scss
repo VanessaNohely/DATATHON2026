@@ -1,0 +1,26 @@
+.spending {
+  &__header {
+    display: flex; align-items: center;
+    justify-content: space-between; margin-bottom: var(--space-md);
+  }
+  &__title { font-size: 14px; font-weight: 700; }
+  &__bars  { display: flex; flex-direction: column; gap: 10px; }
+}
+
+.cat-row {
+  display: flex; align-items: center; gap: 10px;
+  &__icon { font-size: 18px; width: 24px; text-align: center; flex-shrink: 0; }
+  &__body { flex: 1; }
+  &__top  { display: flex; justify-content: space-between; margin-bottom: 4px; }
+  &__name { font-size: 12px; color: var(--text-secondary); }
+  &__amount { font-size: 12px; font-weight: 600; }
+  &__track {
+    height: 4px; background: var(--border-strong);
+    border-radius: var(--radius-full); overflow: hidden;
+  }
+  &__fill {
+    height: 100%; background: var(--hey-coral);
+    border-radius: var(--radius-full);
+    transition: width 0.8s cubic-bezier(.4,0,.2,1);
+  }
+}

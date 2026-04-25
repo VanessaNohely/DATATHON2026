@@ -1,0 +1,68 @@
+@if (ctx.profile(); as p) {
+  <div class="profile-header fade-in-up">
+    <div class="profile-header__top">
+      <div class="profile-header__avatar">
+        <span class="profile-header__emoji">{{ p.segment_emoji }}</span>
+      </div>
+      <div class="profile-header__info">
+        <p class="profile-header__greeting">Hola, {{ p.name || p.user_id }}</p>
+        <h2 class="profile-header__segment">{{ p.segment_name }}</h2>
+        <span class="badge badge--{{ riskClass() }}">{{ riskLabel() }}</span>
+      </div>
+      <div class="profile-header__score">
+        <div class="score-ring">
+          <svg viewBox="0 0 36 36" class="score-ring__svg">
+            <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--border-strong)" stroke-width="2.5"/>
+            <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--hey-coral)"
+              stroke-width="2.5" stroke-linecap="round"
+              [style.stroke-dasharray]="scoreBar() + ' 100'"
+              [style.stroke-dashoffset]="'25'"
+              transform="rotate(-90 18 18)"/>
+          </svg>
+          <span class="score-ring__value">{{ scoreBar() }}</span>
+        </div>
+        <p class="score-ring__label">Score</p>
+      </div>
+    </div>
+
+    <div class="profile-header__stats">
+      <div class="stat">
+        <span class="stat__value">{{ p.features.ingreso_mensual_mxn | currency:'MXN':'symbol-narrow':'1.0-0' }}</span>
+        <span class="stat__label">Ingreso mensual</span>
+      </div>
+      <div class="stat">
+        <span class="stat__value">{{ p.features.score_buro }}</span>
+        <span class="stat__label">Score buró</span>
+      </div>
+      <div class="stat">
+        <span class="stat__value">{{ p.features.num_productos_activos }}</span>
+        <span class="stat__label">Productos</span>
+      </div>
+      <div class="stat">
+        <span class="stat__value text-success">+${{ p.cashback_acumulado | number:'1.0-0' }}</span>
+        <span class="stat__label">Cashback</span>
+      </div>
+    </div>
+
+    <!-- Persona tags -->
+    @if (p.persona) {
+      <div class="profile-header__persona">
+        <span class="persona-tag persona-tag--risk">
+          <span class="persona-tag__dot"></span>{{ p.persona.risk_profile }}
+        </span>
+        <span class="persona-tag persona-tag--wealth">
+          {{ wealthIcon(p.persona.wealth_tier) }} {{ p.persona.wealth_tier }}
+        </span>
+        <span class="persona-tag persona-tag--lifestyle">
+          {{ lifestyleIcon(p.persona.lifestyle) }} {{ p.persona.lifestyle }}
+        </span>
+        <span class="persona-tag persona-tag--engagement">
+          {{ engagementIcon(p.persona.engagement) }} {{ p.persona.engagement }}
+        </span>
+        <span class="persona-tag persona-tag--conv">
+          💬 {{ p.persona.conv_style }}
+        </span>
+      </div>
+    }
+  </div>
+}

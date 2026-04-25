@@ -1,0 +1,109 @@
+@if (ctx.loading()) {
+  <app-loading-spinner [fullscreen]="true" label="Cargando tu perfil..." />
+} @else {
+  <div class="shell">
+
+    <!-- ── SIDEBAR NAV (desktop) ──────────────────────────── -->
+    <aside class="sidebar">
+      <div class="sidebar__logo">
+        <img src="hey-logo.svg" alt="Hey" class="sidebar__logo-img" />
+      </div>
+      <nav class="sidebar__nav">
+        @for (tab of tabs; track tab.id) {
+          <button
+            class="sidebar__item"
+            [class.sidebar__item--active]="activeTab() === tab.id"
+            (click)="activeTab.set(tab.id)"
+            [title]="tab.label">
+            <span class="sidebar__icon">{{ tab.icon }}</span>
+            <span class="sidebar__label">{{ tab.label }}</span>
+          </button>
+        }
+      </nav>
+      <button class="sidebar__theme" (click)="theme.toggle()" [title]="theme.isDark() ? 'Modo claro' : 'Modo oscuro'">
+        <span>{{ theme.isDark() ? '☀️' : '🌙' }}</span>
+        <span class="sidebar__label">{{ theme.isDark() ? 'Claro' : 'Oscuro' }}</span>
+      </button>
+    </aside>
+
+    <!-- ── MAIN AREA ──────────────────────────────────────── -->
+    <div class="shell__main">
+
+      <!-- Hero -->
+      @if (ctx.profile(); as p) {
+        <header class="hero">
+          <div class="hero__top">
+            <div class="hero__mobile-logo">
+              <img src="hey-logo.svg" alt="Hey Banco" class="hero__logo-img" />
+            </div>
+            <span class="hero__greeting">Hola, {{ p.name }} 👋</span>
+            <button class="hero__theme-btn" (click)="theme.toggle()" [title]="theme.isDark() ? 'Modo claro' : 'Modo oscuro'">
+              {{ theme.isDark() ? '☀️' : '🌙' }}
+            </button>
+          </div>
+
+          <div class="hero__body">
+            <div class="hero__left">
+              <p class="hero__label">Cashback acumulado</p>
+              <p class="hero__amount">
+                <span class="hero__currency">$</span>{{ p.cashback_acumulado | number:'1.0-0' }}<span class="hero__currency"> MXN</span>
+              </p>
+              <p class="hero__segment">{{ p.segment_emoji }} {{ p.segment_name }}</p>
+            </div>
+            <div class="hero__score-wrap">
+              <div class="hero__score-ring">
+                <svg viewBox="0 0 36 36">
+                  <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3"/>
+                  <circle cx="18" cy="18" r="14" fill="none" stroke="white"
+                    stroke-width="3" stroke-linecap="round"
+                    [style.stroke-dasharray]="(p.score_compuesto * 88).toFixed(1) + ' 88'"
+                    stroke-dashoffset="22"
+                    transform="rotate(-90 18 18)"/>
+                </svg>
+                <div class="hero__score-inner">
+                  <span class="hero__score-num">{{ (p.score_compuesto * 100).toFixed(0) }}</span>
+                  <span class="hero__score-lbl">score</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          @if (p.persona) {
+            <div class="hero__tags">
+              <span class="hero__tag">⚡ {{ p.persona.engagement }}</span>
+              <span class="hero__tag">🏦 {{ p.persona.wealth_tier }}</span>
+              <span class="hero__tag">{{ lifestyleEmoji(p.persona.lifestyle) }} {{ p.persona.lifestyle }}</span>
+            </div>
+          }
+        </header>
+      }
+
+      <!-- Tab content -->
+      <main class="shell__content">
+        @switch (activeTab()) {
+          @case ('home')     { <app-home-tab />     }
+          @case ('chat')     { <app-chat-tab />     }
+          @case ('spending') { <app-spending-tab /> }
+          @case ('profile')  { <app-profile-tab />  }
+        }
+      </main>
+
+      <!-- Bottom nav (mobile only) -->
+      <nav class="bottom-nav">
+        @for (tab of tabs; track tab.id) {
+          <button
+            class="bottom-nav__item"
+            [class.bottom-nav__item--active]="activeTab() === tab.id"
+            (click)="activeTab.set(tab.id)">
+            <span class="bottom-nav__icon">{{ tab.icon }}</span>
+            <span class="bottom-nav__label">{{ tab.label }}</span>
+            @if (activeTab() === tab.id) {
+              <span class="bottom-nav__dot"></span>
+            }
+          </button>
+        }
+      </nav>
+
+    </div><!-- /shell__main -->
+  </div>
+}

@@ -1,0 +1,19 @@
+@if (ctx.alerts().length) {
+  <div class="alerts fade-in-up">
+    <p class="alerts__label">Alertas de tu cuenta</p>
+    <div class="alerts__list">
+      @for (alert of ctx.alerts(); track alert.id) {
+        @if (visible(alert)) {
+          <div class="alert alert--{{ alert.type }}">
+            <span class="alert__icon">{{ iconFor(alert.type) }}</span>
+            <div class="alert__body">
+              <p class="alert__title">{{ alert.title }}</p>
+              <p class="alert__msg">{{ alert.message }}</p>
+            </div>
+            <button class="alert__dismiss" (click)="dismiss(alert.id)" aria-label="Cerrar">✕</button>
+          </div>
+        }
+      }
+    </div>
+  </div>
+}

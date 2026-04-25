@@ -1,0 +1,18 @@
+@if (ctx.recs().length) {
+  <div class="recs fade-in-up">
+    <p class="recs__title">Para ti</p>
+    <div class="recs__list">
+      @for (rec of ctx.recs(); track rec.id) {
+        <div class="rec-card">
+          <span class="rec-card__icon">{{ rec.icon }}</span>
+          <div class="rec-card__body">
+            <p class="rec-card__product">{{ rec.product }}</p>
+            <p class="rec-card__title">{{ rec.title }}</p>
+            <p class="rec-card__desc">{{ rec.description }}</p>
+          </div>
+          <button class="btn btn--ghost rec-card__cta">{{ rec.cta }}</button>
+        </div>
+      }
+    </div>
+  </div>
+}

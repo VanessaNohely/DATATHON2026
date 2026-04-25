@@ -1,0 +1,7 @@
+@if (chips().length) {
+  <div class="chips">
+    @for (chip of chips(); track chip) {
+      <button class="chip" (click)="selected.emit(chip)">{{ chip }}</button>
+    }
+  </div>
+}
