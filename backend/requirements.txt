@@ -1,0 +1,16 @@
+# Hey Havi API — Backend dependencies
+# Instalación: pip install -r requirements.txt
+# Levantar:    uvicorn main:app --reload --port 8000
+
+fastapi==0.136.1
+uvicorn==0.46.0
+pydantic==2.13.3
+pandas==2.3.3
+numpy==2.2.6
+
+# ── LLM (descomentar según proveedor) ─────────────────────────
+# Para usar Claude (recomendado para el demo):
+anthropic>=0.40.0
+
+# Para usar OpenAI:
+# openai>=1.50.0
