@@ -1,1 +1,49 @@
-<p>login works!</p>
+<div class="login-shell">
+  <div class="login-card">
+
+    <!-- Logo -->
+    <div class="login-card__logo">
+      <img src="hey-logo.svg" alt="Hey Banco" class="login-card__logo-img" />
+    </div>
+
+    <!-- Header -->
+    <div class="login-card__header">
+      <h1 class="login-card__title">Bienvenido a Havi</h1>
+      <p class="login-card__sub">Tu asistente financiero personalizado</p>
+    </div>
+
+    <!-- Form -->
+    <div class="login-card__form">
+      <div class="field">
+        <label class="field__label">Contraseña de acceso</label>
+        <input
+          class="field__input"
+          type="password"
+          placeholder="Ingresa tu contraseña"
+          [ngModel]="password()"
+          (ngModelChange)="password.set($event)"
+          (keydown)="onKeydown($event)"
+          [disabled]="loading()"
+          autocomplete="current-password" />
+      </div>
+
+      @if (error()) {
+        <p class="login-card__error">{{ error() }}</p>
+      }
+
+      <button
+        class="btn btn--primary login-card__btn"
+        (click)="onLogin()"
+        [disabled]="loading()">
+        @if (loading()) {
+          <span class="login-card__spinner"></span>
+          Verificando...
+        } @else {
+          Entrar
+        }
+      </button>
+    </div>
+
+    <p class="login-card__footer">Hey Banco · Datathon 2026</p>
+  </div>
+</div>
