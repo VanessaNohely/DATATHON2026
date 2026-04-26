@@ -1,9 +1,12 @@
 import os
 from pathlib import Path
-from dotenv import load_dotenv
 
-# Carga el .env automáticamente desde la carpeta backend/
-load_dotenv(Path(__file__).parent / ".env")
+# python-dotenv es opcional — si no está instalado, usa variables de entorno del shell
+try:
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).parent / ".env")
+except ImportError:
+    pass  # sin dotenv: usar variables del entorno del shell directamente
 
 BASE_DIR = Path(__file__).parent.parent
 
