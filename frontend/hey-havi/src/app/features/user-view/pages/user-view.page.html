@@ -33,6 +33,10 @@
         <span>{{ theme.isDark() ? '☀️' : '🌙' }}</span>
         <span class="sidebar__label">{{ theme.isDark() ? 'Claro' : 'Oscuro' }}</span>
       </button>
+      <button class="sidebar__theme" (click)="logout()">
+        <span>🚪</span>
+        <span class="sidebar__label">Cerrar sesión</span>
+      </button>
     </aside>
 
     <!-- ── MAIN AREA ──────────────────────────────────────── -->

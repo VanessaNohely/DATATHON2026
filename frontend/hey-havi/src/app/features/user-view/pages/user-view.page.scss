@@ -262,18 +262,4 @@ $bp-desktop: 768px;
   &__icon  { font-size: 20px; line-height: 1; transition: transform var(--transition); }
 
   &__label {
-    font-size: 10px; font-weight: 600; color: var(--text-muted);
-    letter-spacing: 0.02em; transition: color var(--transition);
-  }
-
-  &__dot {
-    position: absolute; bottom: -2px;
-    width: 4px; height: 4px;
-    background: var(--hey-coral); border-radius: 50%;
-  }
-
-  &__item--active {
-    .bottom-nav__label { color: var(--hey-coral); }
-    .bottom-nav__icon  { filter: drop-shadow(0 0 6px rgba(255,61,85,0.5)); }
-  }
-}
+    font-size: 10px; font-weight: 600; color: va

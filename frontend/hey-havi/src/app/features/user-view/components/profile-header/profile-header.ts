@@ -23,41 +23,4 @@ export class ProfileHeaderComponent {
       'Conservative': 'Perfil sano',
       'Moderate':     'Perfil sano',
       'Aggressive':   'Monitoreo',
-      'Distressed':   'Atención',
-    };
-    return map[r ?? ''] ?? 'Perfil sano';
-  }
-
-  riskBadgeClass(): string {
-    const r = this.ctx.profile()?.persona?.risk_profile;
-    if (r === 'Distressed') return 'danger';
-    if (r === 'Aggressive') return 'warning';
-    return 'success';
-  }
-
-  wealthIcon(tier: WealthTier): string {
-    const map: Record<WealthTier, string> = {
-      'Entry': '🌱', 'Growing': '📈', 'Established': '🏦', 'Affluent': '💰'
-    };
-    return map[tier] ?? '💳';
-  }
-
-  lifestyleIcon(lifestyle: Lifestyle): string {
-    const map: Record<Lifestyle, string> = {
-      'Essential spender':   '🛒',
-      'Foodie/Social':       '🍽️',
-      'Tech/Digital native': '📱',
-      'Traveler':            '✈️',
-      'Family/Home':         '🏠',
-      'Status spender':      '✨',
-    };
-    return map[lifestyle] ?? '💳';
-  }
-
-  engagementIcon(eng: Engagement): string {
-    const map: Record<Engagement, string> = {
-      'Power user': '⚡', 'Casual': '😌', 'At-risk': '⚠️', 'Dormant': '😴'
-    };
-    return map[eng] ?? '👤';
-  }
-}
+  

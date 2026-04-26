@@ -35,48 +35,4 @@ export interface UserFeatures {
 
 export interface SpendingCategory {
   category: string;
-  amount: number;
-  percentage: number;
-  icon: string;
-}
-
-export interface UserProfile {
-  user_id: string;
-  name: string;
-  segment_name: string;
-  segment_emoji: string;
-  risk_level: RiskLevel;
-  credit_profile: CreditProfile;
-  score_compuesto: number;
-  cluster_id: number;
-  persona: FinancialPersona;
-  features: UserFeatures;
-  top_topics: TopicWeight[];
-  spending_summary: SpendingCategory[];
-  cashback_acumulado: number;
-  productos_activos: string[];
-}
-
-export interface Alert {
-  id: string;
-  type: 'warning' | 'info' | 'success' | 'danger';
-  title: string;
-  message: string;
-  action?: string;
-}
-
-export interface Recommendation {
-  id: string;
-  product: string;
-  title: string;
-  description: string;
-  cta: string;
-  icon: string;
-}
-
-export interface ContextResponse {
-  profile: UserProfile;
-  alerts: Alert[];
-  havi_greeting: string;
-  recommendations: Recommendation[];
-}
+  amount: number

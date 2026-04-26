@@ -68,44 +68,4 @@
     position: absolute;
     inset: 0;
     display: flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 700;
-  }
-  &__label {
-    font-size: 10px;
-    color: var(--text-muted);
-    text-align: center;
-    margin-top: 2px;
-  }
-}
-
-.text-success { color: var(--success); }
-
-// ── Persona tags ─────────────────────────────────────────────
-.persona-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 10px;
-  border-radius: var(--radius-full);
-  font-size: 11px;
-  font-weight: 600;
-  border: 1px solid transparent;
-  white-space: nowrap;
-
-  &__dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: currentColor;
-    flex-shrink: 0;
-  }
-
-  &--risk     { background: var(--info-muted);    color: var(--info);    border-color: rgba(59,158,255,0.2); }
-  &--wealth   { background: var(--success-muted); color: var(--success); border-color: rgba(29,184,126,0.2); }
-  &--lifestyle{ background: var(--hey-coral-muted); color: var(--hey-coral-light); border-color: rgba(255,61,85,0.2); }
-  &--engagement {
-    background: var(--warning-muted);
-    color: var(--warning);
-    border-color: rgba(245,166,35,0.2);
-  }
-  &--conv     { background: rgba(255,255,255,0.05); color: var(--text-secondary); border-color: var(--border-strong); }
-}
+    font-size: 

@@ -6,6 +6,4 @@ import { UserViewPageComponent } from './features/user-view/pages/user-view.page
   standalone: true,
   imports: [UserViewPageComponent],
   template: '<app-user-view-page />',
-  styles: [':host { display: block; min-height: 100vh; }']
-})
-export class AppComponent {}
+  styles: [':host { display: block; m

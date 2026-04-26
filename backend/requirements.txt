@@ -8,9 +8,15 @@ pydantic==2.13.3
 pandas==2.3.3
 numpy==2.2.6
 
-# ── LLM (descomentar según proveedor) ─────────────────────────
-# Para usar Claude (recomendado para el demo):
-anthropic>=0.40.0
+# ── LLM ───────────────────────────────────────────────────────
+# Ollama (local, sin costo) ← DEFAULT
+# Requiere instalar Ollama: https://ollama.com
+# y descargar el modelo:    ollama pull gemma4:e2b
+ollama>=0.4.0
+requests>=2.32.0   # para verificar si Ollama está corriendo
 
-# Para usar OpenAI:
+# Anthropic (Claude en la nube):
+# anthropic>=0.40.0
+
+# OpenAI (GPT en la nube):
 # openai>=1.50.0

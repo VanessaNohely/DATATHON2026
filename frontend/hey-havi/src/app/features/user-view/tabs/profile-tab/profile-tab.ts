@@ -21,21 +21,4 @@ export class ProfileTabComponent {
   ] as const;
 
   // Traducciones de valores en inglés (backend) a español (UI)
-  private readonly LABELS: Record<string, string> = {
-    // risk_profile
-    'Conservative': 'Conservador',
-    'Moderate':     'Moderado',
-    'Aggressive':   'Emprendedor',
-    'Distressed':   'Estresado',
-    // wealth_tier
-    'Entry':        'Bajo',
-    'Growing':      'Crecimiento',
-    'Established':  'Establecido',
-    'Affluent':     'Afluente',
-  };
-
-  getVal(key: string): string {
-    const raw = (this.ctx.profile()?.persona as any)?.[key] ?? '—';
-    return this.LABELS[raw] ?? raw;
-  }
-}
+  private readonly LABELS: Record<str

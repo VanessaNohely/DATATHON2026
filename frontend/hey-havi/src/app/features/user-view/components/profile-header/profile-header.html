@@ -44,25 +44,4 @@
       </div>
     </div>
 
-    <!-- Persona tags -->
-    @if (p.persona) {
-      <div class="profile-header__persona">
-        <span class="persona-tag persona-tag--risk">
-          <span class="persona-tag__dot"></span>{{ p.persona.risk_profile }}
-        </span>
-        <span class="persona-tag persona-tag--wealth">
-          {{ wealthIcon(p.persona.wealth_tier) }} {{ p.persona.wealth_tier }}
-        </span>
-        <span class="persona-tag persona-tag--lifestyle">
-          {{ lifestyleIcon(p.persona.lifestyle) }} {{ p.persona.lifestyle }}
-        </span>
-        <span class="persona-tag persona-tag--engagement">
-          {{ engagementIcon(p.persona.engagement) }} {{ p.persona.engagement }}
-        </span>
-        <span class="persona-tag persona-tag--conv">
-          💬 {{ p.persona.conv_style }}
-        </span>
-      </div>
-    }
-  </div>
-}
+    <

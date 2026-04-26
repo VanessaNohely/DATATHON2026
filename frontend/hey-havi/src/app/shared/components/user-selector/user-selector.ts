@@ -24,5 +24,3 @@ export class UserSelectorComponent {
 
   isActive(user: UserOption): boolean {
     return this.ctx.userId() === user.user_id;
-  }
-}

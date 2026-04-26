@@ -1,8 +1,10 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { UserContextService } from '../../../core/services/user-context.service';
 import { HeyApiService } from '../../../core/services/hey-api.service';
 import { ThemeService } from '../../../core/services/theme.service';
+import { AuthService } from '../../../services/auth';
 import { HomeTabComponent } from '../tabs/home-tab/home-tab';
 import { ChatTabComponent } from '../tabs/chat-tab/chat-tab';
 import { SpendingTabComponent } from '../tabs/spending-tab/spending-tab';
@@ -27,12 +29,19 @@ export type Tab = 'home' | 'chat' | 'spending' | 'profile';
   styleUrl: './user-view.page.scss'
 })
 export class UserViewPageComponent implements OnInit {
-  private api = inject(HeyApiService);
+  private api    = inject(HeyApiService);
+  private router = inject(Router);
+  private auth   = inject(AuthService);
   ctx   = inject(UserContextService);
   theme = inject(ThemeService);
 
   activeTab     = signal<Tab>('home');
   showSelector  = signal(false);
+
+  logout(): void {
+    this.auth.logout();
+    this.router.navigate(['/login']);
+  }
 
   tabs: { id: Tab; icon: string; label: string }[] = [
     { id: 'home',     icon: '🏠', label: 'Inicio'  },
