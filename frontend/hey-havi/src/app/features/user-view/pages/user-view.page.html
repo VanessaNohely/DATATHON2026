@@ -84,13 +84,23 @@
             </div>
           </div>
 
-          @if (p.persona) {
-            <div class="hero__tags">
-              <span class="hero__tag">⚡ {{ p.persona.engagement }}</span>
-              <span class="hero__tag">🏦 {{ p.persona.wealth_tier }}</span>
-              <span class="hero__tag">{{ lifestyleEmoji(p.persona.lifestyle) }} {{ p.persona.lifestyle }}</span>
-            </div>
-          }
+          <!-- Tags amigables al usuario — sin categorías internas del modelo -->
+          <div class="hero__tags">
+            @if (p.features.es_hey_pro) {
+              <span class="hero__tag">⭐ Hey Pro Activo</span>
+            }
+            @if (p.features.score_buro >= 700) {
+              <span class="hero__tag">✅ Buen historial</span>
+            } @else if (p.features.score_buro >= 550) {
+              <span class="hero__tag">📈 Historial en progreso</span>
+            }
+            @if (p.cashback_acumulado > 0) {
+              <span class="hero__tag">💰 ${{ p.cashback_acumulado | number:'1.0-0' }} cashback</span>
+            }
+            @if (p.features.num_productos_activos >= 3) {
+              <span class="hero__tag">🏦 {{ p.features.num_productos_activos }} productos</span>
+            }
+          </div>
         </header>
       }
 

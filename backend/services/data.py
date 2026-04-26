@@ -1,20 +1,24 @@
 """
 services/data.py
-Carga y merge de los 3 CSVs. Se ejecuta una sola vez al arrancar.
+Carga y merge de los CSVs de Carlos. Se ejecuta una sola vez al arrancar.
 """
 import pandas as pd
 from config import CLUSTERS_CSV, FEATURES_CSV, CONV_CSV
 
-# Columnas de features que necesita el contexto
+# Columnas disponibles en hey_banco_complete_features.csv (71 cols de Carlos)
 _FEATURE_COLS = [
     "user_id", "edad", "ingreso_mensual_mxn", "score_buro",
-    "dias_desde_ultimo_login", "es_hey_pro", "num_productos_activos",
+    "dias_desde_ultimo_login", "es_hey_pro_x", "num_productos_activos",
     "satisfaccion_1_10", "antiguedad_dias", "cashback_total",
     "monthly_avg_spend", "digital_payment_rate", "investment_balance",
-    "engagement_score", "credit_health",
+    "engagement_score", "credit_health" if "credit_health" in [] else None,
     "pct_restaurante", "pct_tecnologia", "pct_viajes",
     "pct_supermercado", "pct_entretenimiento", "pct_servicios_digitales",
+    "atypical_txn_rate", "failed_txn_rate", "dispute_rate",
+    "financial_sophistication", "vulnerability_flag",
 ]
+# Filtrar Nones
+_FEATURE_COLS = [c for c in _FEATURE_COLS if c]
 
 _CONV_COLS = [
     "user_id", "conv_style", "conv_dominant_topic",
@@ -23,10 +27,18 @@ _CONV_COLS = [
 
 
 def load() -> pd.DataFrame:
-    """Carga y une los 3 datasets. Devuelve un DataFrame indexado por user_id."""
+    """Carga y une los CSVs. Devuelve un DataFrame indexado por user_id."""
     clusters = pd.read_csv(CLUSTERS_CSV)
-    features = pd.read_csv(FEATURES_CSV, usecols=_FEATURE_COLS)
-    conv     = pd.read_csv(CONV_CSV,     usecols=_CONV_COLS)
+    conv     = pd.read_csv(CONV_CSV, usecols=_CONV_COLS)
+
+    # Cargar solo columnas que existen en el CSV de Carlos
+    features_all = pd.read_csv(FEATURES_CSV, nrows=1)
+    available_cols = ["user_id"] + [c for c in _FEATURE_COLS if c != "user_id" and c in features_all.columns]
+    features = pd.read_csv(FEATURES_CSV, usecols=available_cols)
+
+    # Normalizar nombre de hey_pro
+    if "es_hey_pro_x" in features.columns:
+        features = features.rename(columns={"es_hey_pro_x": "es_hey_pro"})
 
     df = (clusters
           .merge(conv,     on="user_id", how="left")
@@ -39,11 +51,10 @@ def load() -> pd.DataFrame:
     df["conv_style"]         = df["conv_style"].fillna("Passive")
 
     df = df.set_index("user_id")
-    print(f"✅ Dataset listo: {len(df):,} usuarios")
+    print(f"✅ Dataset listo: {len(df):,} usuarios | {len(df.columns)} features")
     return df
 
 
-# Singleton — se carga una sola vez
 _df: pd.DataFrame | None = None
 
 

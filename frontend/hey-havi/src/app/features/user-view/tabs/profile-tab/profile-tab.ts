@@ -12,23 +12,35 @@ import { UserContextService } from '../../../../core/services/user-context.servi
 export class ProfileTabComponent {
   ctx = inject(UserContextService);
 
-  dimensions = [
-    { key: 'risk_profile', label: 'Perfil de riesgo',     icon: '🎯', colorClass: 'info'    },
-    { key: 'wealth_tier',  label: 'Estrato de riqueza',   icon: '💰', colorClass: 'success' },
-    { key: 'lifestyle',    label: 'Spending lifestyle',   icon: '🛒', colorClass: 'coral'   },
-    { key: 'engagement',   label: 'Engagement digital',   icon: '⚡', colorClass: 'warning' },
-    { key: 'conv_style',   label: 'Perfil conversacional',icon: '💬', colorClass: 'muted'   },
-  ] as const;
+  scoreLabel(score: number): string {
+    if (score >= 750) return 'Excelente — sigue así';
+    if (score >= 700) return 'Muy bueno';
+    if (score >= 650) return 'Bueno';
+    if (score >= 550) return 'Regular — puedes mejorarlo';
+    return 'En proceso de mejora';
+  }
 
-  private readonly LABELS: Record<string, string> = {
-    'Conservative': 'Conservador', 'Moderate': 'Moderado',
-    'Aggressive': 'Emprendedor',   'Distressed': 'Estresado',
-    'Entry': 'Bajo',               'Growing': 'Crecimiento',
-    'Established': 'Establecido',  'Affluent': 'Afluente',
-  };
+  antiguedad(dias: number): string {
+    if (dias >= 365) return `${Math.floor(dias / 365)} año${Math.floor(dias / 365) > 1 ? 's' : ''}`;
+    if (dias >= 30) return `${Math.floor(dias / 30)} mes${Math.floor(dias / 30) > 1 ? 'es' : ''}`;
+    return `${dias} días`;
+  }
 
-  getVal(key: string): string {
-    const raw = (this.ctx.profile()?.persona as any)?.[key] ?? '—';
-    return this.LABELS[raw] ?? raw;
+  topicLabel(topic: string): string {
+    const labels: Record<string, string> = {
+      'transferencias_app':  'Transferencias',
+      'tarjetas_fisicas':    'Mis tarjetas',
+      'credito_plazos':      'Crédito a plazos',
+      'gestion_cuenta':      'Mi cuenta',
+      'escalacion_humano':   'Hablar con un asesor',
+      'solicitud_credito':   'Solicitar crédito',
+      'canales_atencion':    'Canales de atención',
+      'cancelaciones':       'Cancelaciones',
+      'productos_hey':       'Productos Hey',
+      'credito_auto':        'Crédito auto',
+      'cargos_disputas':     'Aclaraciones',
+      'transferencias':      'Transferencias',
+    };
+    return labels[topic] ?? topic.replace(/_/g, ' ');
   }
 }

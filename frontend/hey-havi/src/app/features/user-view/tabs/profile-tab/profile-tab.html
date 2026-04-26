@@ -1,73 +1,78 @@
 @if (ctx.profile(); as p) {
   <div class="ptab fade-in-up">
 
-    <!-- Identity -->
+    <!-- Identidad -->
     <div class="card ptab__identity">
       <div class="ptab__avatar">{{ p.segment_emoji }}</div>
-      <h2 class="ptab__name">{{ p.name || p.user_id }}</h2>
-      <p class="ptab__segment">{{ p.segment_name }}</p>
-      <div class="ptab__badges">
-        <span class="badge badge--coral">{{ p.credit_profile }}</span>
-        <span class="badge badge--info">Cluster {{ p.cluster_id }}</span>
-      </div>
+      <h2 class="ptab__name">{{ p.name || 'Mi perfil' }}</h2>
+      <p class="ptab__sub">Miembro desde hace {{ antiguedad(p.features.antiguedad_dias) }}</p>
     </div>
 
-    <!-- Financial Persona -->
+    <!-- Salud financiera -->
     <div class="card">
-      <p class="ptab__section-title">Financial Persona</p>
-      <div class="ptab__dims">
-        @for (dim of dimensions; track dim.key) {
-          <div class="ptab__dim">
-            <span class="ptab__dim-icon">{{ dim.icon }}</span>
-            <div class="ptab__dim-body">
-              <span class="ptab__dim-label">{{ dim.label }}</span>
-              <span class="ptab__dim-value ptab__dim-value--{{ dim.colorClass }}">{{ getVal(dim.key) }}</span>
-            </div>
+      <p class="ptab__section-title">Tu salud financiera</p>
+      <div class="ptab__health">
+
+        <div class="health-item">
+          <div class="health-item__icon" [class.good]="p.features.score_buro >= 700"
+               [class.mid]="p.features.score_buro >= 550 && p.features.score_buro < 700"
+               [class.low]="p.features.score_buro < 550">
+            {{ p.features.score_buro >= 700 ? '🟢' : p.features.score_buro >= 550 ? '🟡' : '🔴' }}
           </div>
-        }
-      </div>
-    </div>
-
-    <!-- Key stats -->
-    <div class="card">
-      <p class="ptab__section-title">Métricas clave</p>
-      <div class="ptab__metrics">
-        <div class="metric">
-          <span class="metric__val">{{ p.features.score_buro }}</span>
-          <span class="metric__lbl">Score buró</span>
-        </div>
-        <div class="metric">
-          <span class="metric__val">{{ p.features.satisfaccion }}/10</span>
-          <span class="metric__lbl">Satisfacción</span>
-        </div>
-        <div class="metric">
-          <span class="metric__val">{{ p.features.antiguedad_dias }}d</span>
-          <span class="metric__lbl">Antigüedad</span>
-        </div>
-        <div class="metric">
-          <span class="metric__val" [class.text-success]="p.features.es_hey_pro">
-            {{ p.features.es_hey_pro ? 'Activo' : 'Inactivo' }}
-          </span>
-          <span class="metric__lbl">Hey Pro</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Top topics -->
-    <div class="card">
-      <p class="ptab__section-title">Tópicos conversacionales</p>
-      <div class="ptab__topics">
-        @for (t of p.top_topics; track t.topic) {
-          <div class="topic-row">
-            <span class="topic-row__name">{{ t.topic.replace('_', ' ') }}</span>
-            <div class="topic-row__track">
-              <div class="topic-row__fill" [style.width.%]="t.weight * 100"></div>
-            </div>
-            <span class="topic-row__pct">{{ (t.weight * 100).toFixed(0) }}%</span>
+          <div class="health-item__body">
+            <p class="health-item__label">Score buró</p>
+            <p class="health-item__value">{{ p.features.score_buro }}</p>
+            <p class="health-item__desc">{{ scoreLabel(p.features.score_buro) }}</p>
           </div>
-        }
+        </div>
+
+        <div class="health-item">
+          <div class="health-item__icon">{{ p.features.es_hey_pro ? '⭐' : '💳' }}</div>
+          <div class="health-item__body">
+            <p class="health-item__label">Hey Pro</p>
+            <p class="health-item__value">{{ p.features.es_hey_pro ? 'Activo' : 'Disponible' }}</p>
+            <p class="health-item__desc">{{ p.features.es_hey_pro ? 'Cashback en cada compra' : 'Actívalo para ganar cashback' }}</p>
+          </div>
+        </div>
+
+        <div class="health-item">
+          <div class="health-item__icon">📱</div>
+          <div class="health-item__body">
+            <p class="health-item__label">Último acceso</p>
+            <p class="health-item__value">{{ p.features.dias_sin_login === 0 ? 'Hoy' : 'Hace ' + p.features.dias_sin_login + ' días' }}</p>
+            <p class="health-item__desc">Sigue revisando tu cuenta regularmente</p>
+          </div>
+        </div>
+
+        <div class="health-item">
+          <div class="health-item__icon">🎯</div>
+          <div class="health-item__body">
+            <p class="health-item__label">Satisfacción</p>
+            <p class="health-item__value">{{ p.features.satisfaccion }}/10</p>
+            <p class="health-item__desc">Tu calificación de Hey Banco</p>
+          </div>
+        </div>
+
       </div>
     </div>
+
+    <!-- Tus tópicos frecuentes -->
+    @if (p.top_topics && p.top_topics.length > 0) {
+      <div class="card">
+        <p class="ptab__section-title">Lo que más consultas</p>
+        <div class="ptab__topics">
+          @for (t of p.top_topics; track t.topic) {
+            <div class="topic-row">
+              <span class="topic-row__name">{{ topicLabel(t.topic) }}</span>
+              <div class="topic-row__track">
+                <div class="topic-row__fill" [style.width.%]="t.weight * 100"></div>
+              </div>
+              <span class="topic-row__pct">{{ (t.weight * 100).toFixed(0) }}%</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
 
   </div>
 }

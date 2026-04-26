@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { UserContextService } from '../../../core/services/user-context.service';
@@ -38,6 +38,28 @@ export class UserViewPageComponent implements OnInit {
   activeTab     = signal<Tab>('home');
   showSelector  = signal(false);
 
+  constructor() {
+    // Cada vez que cambia el userId (selector de usuario), llama al backend
+    effect(() => {
+      const userId = this.ctx.userId();
+      this.api.getUserContext(userId).subscribe({
+        next: (res) => {
+          // Solo actualizar el greeting — el perfil viene del mock
+          if (res.havi_greeting) {
+            const currentCtx = {
+              profile:         this.ctx.profile()!,
+              alerts:          this.ctx.alerts(),
+              havi_greeting:   res.havi_greeting,
+              recommendations: this.ctx.recs(),
+            };
+            this.ctx.setContext(currentCtx);
+          }
+        },
+        error: () => {}
+      });
+    });
+  }
+
   logout(): void {
     this.auth.logout();
     this.router.navigate(['/login']);
@@ -63,11 +85,9 @@ export class UserViewPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ctx.setContext(DEMO_USERS[0].context);  // Carlos por default
+    // Carga mock inmediatamente — UI visible desde el primer frame
+    this.ctx.setContext(DEMO_USERS[0].context);
     this.ctx.setLoading(false);
-    this.api.getUserContext(this.ctx.userId()).subscribe({
-      next: (res) => this.ctx.setContext(res),
-      error: () => {}
-    });
+    // El effect del constructor se encarga de llamar al backend
   }
 }

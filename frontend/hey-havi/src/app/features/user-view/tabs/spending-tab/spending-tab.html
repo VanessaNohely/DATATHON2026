@@ -6,11 +6,9 @@
       <div class="spending-tab__tip card">
         <p class="spending-tab__tip-title">💡 Insight de Havi</p>
         <p class="spending-tab__tip-text">
-          Tu mayor gasto es en <strong>{{ p.spending_summary[0].category }}</strong>
+          Tu mayor gasto este mes es en <strong>{{ p.spending_summary[0].category }}</strong>
           con {{ p.spending_summary[0].percentage }}% del total.
-          @if (p.persona) {
-            Como <em>{{ p.persona.lifestyle }}</em>, esto es consistente con tu perfil.
-          }
+          ¿Quieres ver cómo optimizarlo?
         </p>
       </div>
     }
