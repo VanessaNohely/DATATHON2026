@@ -140,47 +140,13 @@ def _openai_chat(user_id: str, message: str, system: str) -> tuple[str, list[str
         return _rule_based(message, system)
 
 
-# ── Fallback: reglas sin LLM ──────────────────────────────────
+# ── Fallback cuando el LLM no está disponible ─────────────────
 def _rule_based(message: str, context: str) -> tuple[str, list[str]]:
-    msg      = message.lower()
-    cashback = _extract(context, "Cashback acumulado: $", " MXN")
-    score    = _extract(context, "Score buró: ", " (")
-    invest   = _extract(context, "Saldo en inversión: $", " MXN")
-
-    if any(w in msg for w in ["cashback", "recompensa"]):
-        return (f"Tienes ${cashback} en cashback acumulado. Puedes usarlo en tu próxima compra. ¿Quieres saber cómo?",
-                ["¿Cómo usar mi cashback?", "Ver mis gastos del mes"])
-
-    if any(w in msg for w in ["inversión", "inversion", "invertir", "rendimiento"]):
-        if invest and float(invest.replace(",", "")) > 0:
-            reply = f"Tu inversión Hey tiene ${invest}. El GAT actual es 10.5% anual. ¿Quieres hacer un abono?"
-        else:
-            reply = "Aún no tienes inversión activa. Puedes empezar desde $500 con GAT de 10.5% anual. ¿Te interesa?"
-        return reply, ["¿Cómo funciona la inversión?", "¿Cuánto necesito para empezar?"]
-
-    if any(w in msg for w in ["score", "buró", "buro", "crédito"]):
-        return (f"Tu score buró es {score}. Pagar a tiempo y reducir utilización son los pasos clave para mejorarlo.",
-                ["¿Cómo mejorar mi score?", "Ver mis productos"])
-
-    if any(w in msg for w in ["gasto", "compra", "categoría", "mes"]):
-        return ("Puedes ver el desglose completo de tus gastos en la pestaña 'Gastos'. ¿Te explico alguna categoría?",
-                ["Ver todos mis gastos", "¿Cómo ahorrar más?"])
-
-    if any(w in msg for w in ["hola", "buenos", "buenas", "hi"]):
-        return ("¡Hola! Puedo ayudarte con tu cashback, inversiones, gastos o score buró. ¿Por dónde empezamos?",
-                ["¿Cuánto cashback tengo?", "¿Cómo está mi score?", "Ver mis gastos"])
-
-    return (f"Puedo ayudarte con tu cashback (${cashback}), gastos, score ({score}) e inversiones. ¿Sobre cuál te gustaría saber?",
-            ["¿Cuánto cashback tengo?", "¿Cómo está mi score?", "Ver mis gastos"])
-
-
-def _extract(ctx: str, prefix: str, suffix: str) -> str:
-    try:
-        s = ctx.index(prefix) + len(prefix)
-        e = ctx.index(suffix, s)
-        return ctx[s:e]
-    except ValueError:
-        return "0"
+    # Sin LLM activo — mensaje informativo para que sea obvio durante el debug
+    return (
+        "En este momento Havi no está disponible. Asegúrate de que Ollama esté corriendo con el modelo descargado.",
+        ["¿Cómo activar Havi?"]
+    )
 
 
 def _default_suggestions() -> list[str]:

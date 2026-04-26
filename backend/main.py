@@ -46,7 +46,7 @@ async def get_user_context(user_id: str):
         system = ctx["profile"]["_persona_markdown"]
         greeting, _ = llm.chat(
             user_id=user_id,
-            message="Genera un saludo personalizado breve para este usuario en español. Solo el saludo.",
+            message="Saluda al usuario de forma breve y amigable en español. IMPORTANTE: responde SOLO el saludo, sin comillas, sin explicaciones.",
             persona_markdown=system,
         )
         ctx["havi_greeting"] = greeting
