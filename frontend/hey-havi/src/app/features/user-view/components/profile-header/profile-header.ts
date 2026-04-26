@@ -13,23 +13,31 @@ import { WealthTier, Lifestyle, Engagement } from '../../../../core/models/user-
 export class ProfileHeaderComponent {
   ctx = inject(UserContextService);
 
-  riskClass = computed(() => {
-    const r = this.ctx.profile()?.risk_level;
-    return r === 'bajo' ? 'success' : r === 'medio' ? 'warning' : 'danger';
-  });
-
-  riskLabel = computed(() => {
-    const r = this.ctx.profile()?.risk_level;
-    return r === 'bajo' ? 'Perfil sano' : r === 'medio' ? 'Monitoreo' : 'Atención';
-  });
-
   scoreBar = computed(() =>
     Math.round((this.ctx.profile()?.score_compuesto ?? 0) * 100)
   );
 
+  riskLabel(): string {
+    const r = this.ctx.profile()?.persona?.risk_profile;
+    const map: Record<string, string> = {
+      'Conservative': 'Perfil sano',
+      'Moderate':     'Perfil sano',
+      'Aggressive':   'Monitoreo',
+      'Distressed':   'Atención',
+    };
+    return map[r ?? ''] ?? 'Perfil sano';
+  }
+
+  riskBadgeClass(): string {
+    const r = this.ctx.profile()?.persona?.risk_profile;
+    if (r === 'Distressed') return 'danger';
+    if (r === 'Aggressive') return 'warning';
+    return 'success';
+  }
+
   wealthIcon(tier: WealthTier): string {
     const map: Record<WealthTier, string> = {
-      'Bajo': '🌱', 'Crecimiento': '📈', 'Establecido': '🏦', 'Afluente': '💰'
+      'Entry': '🌱', 'Growing': '📈', 'Established': '🏦', 'Affluent': '💰'
     };
     return map[tier] ?? '💳';
   }

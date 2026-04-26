@@ -2,8 +2,9 @@ export type RiskLevel     = 'bajo' | 'medio' | 'alto';
 export type CreditProfile = 'saludable' | 'moderado' | 'tenso';
 
 // ── Financial Persona (Persona.md) ───────────────────────────
-export type RiskProfile  = 'Conservador' | 'Moderado' | 'Emprendedor' | 'Estresado';
-export type WealthTier   = 'Bajo' | 'Crecimiento' | 'Establecido' | 'Afluente';
+// Valores en inglés — matchean los clusters del backend (user_clusters.csv)
+export type RiskProfile  = 'Conservative' | 'Moderate' | 'Aggressive' | 'Distressed';
+export type WealthTier   = 'Entry' | 'Growing' | 'Established' | 'Affluent';
 export type Lifestyle    = 'Essential spender' | 'Foodie/Social' | 'Tech/Digital native' | 'Traveler' | 'Family/Home' | 'Status spender';
 export type Engagement   = 'Power user' | 'Casual' | 'At-risk' | 'Dormant';
 export type ConvStyle    = 'Goal-driven' | 'Support-seeking' | 'Exploratory' | 'Passive';

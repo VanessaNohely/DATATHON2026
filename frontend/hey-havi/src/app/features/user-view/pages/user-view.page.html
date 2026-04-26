@@ -1,3 +1,8 @@
+<!-- User Selector Modal -->
+@if (showSelector()) {
+  <app-user-selector (close)="showSelector.set(false)" />
+}
+
 @if (ctx.loading()) {
   <app-loading-spinner [fullscreen]="true" label="Cargando tu perfil..." />
 } @else {
@@ -20,6 +25,10 @@
           </button>
         }
       </nav>
+      <button class="sidebar__theme" (click)="showSelector.set(true)">
+        <span>👥</span>
+        <span class="sidebar__label">Cambiar usuario</span>
+      </button>
       <button class="sidebar__theme" (click)="theme.toggle()" [title]="theme.isDark() ? 'Modo claro' : 'Modo oscuro'">
         <span>{{ theme.isDark() ? '☀️' : '🌙' }}</span>
         <span class="sidebar__label">{{ theme.isDark() ? 'Claro' : 'Oscuro' }}</span>
@@ -37,6 +46,9 @@
               <img src="hey-logo.svg" alt="Hey Banco" class="hero__logo-img" />
             </div>
             <span class="hero__greeting">Hola, {{ p.name }} 👋</span>
+            <button class="hero__switch-btn" (click)="showSelector.set(true)" title="Cambiar usuario">
+              👥
+            </button>
             <button class="hero__theme-btn" (click)="theme.toggle()" [title]="theme.isDark() ? 'Modo claro' : 'Modo oscuro'">
               {{ theme.isDark() ? '☀️' : '🌙' }}
             </button>

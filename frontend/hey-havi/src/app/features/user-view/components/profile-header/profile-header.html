@@ -7,7 +7,7 @@
       <div class="profile-header__info">
         <p class="profile-header__greeting">Hola, {{ p.name || p.user_id }}</p>
         <h2 class="profile-header__segment">{{ p.segment_name }}</h2>
-        <span class="badge badge--{{ riskClass() }}">{{ riskLabel() }}</span>
+        <span class="badge badge--{{ riskBadgeClass() }}">{{ riskLabel() }}</span>
       </div>
       <div class="profile-header__score">
         <div class="score-ring">

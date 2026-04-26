@@ -1,0 +1,30 @@
+<div class="selector-backdrop" (click)="close.emit()"></div>
+<div class="selector-sheet">
+  <div class="selector-header">
+    <p class="selector-title">Seleccionar perfil</p>
+    <p class="selector-sub">6 arquetipos de usuario — demo de segmentos</p>
+    <button class="selector-close" (click)="close.emit()">✕</button>
+  </div>
+  <div class="selector-grid">
+    @for (user of users; track user.user_id) {
+      <button
+        class="user-card"
+        [class.user-card--active]="isActive(user)"
+        [class.user-card--danger]="user.risk_class === 'danger'"
+        [class.user-card--warning]="user.risk_class === 'warning'"
+        (click)="select(user)">
+        <div class="user-card__emoji">{{ user.segment_emoji }}</div>
+        <div class="user-card__body">
+          <p class="user-card__name">{{ user.display_name }}</p>
+          <p class="user-card__segment">{{ user.segment_name }}</p>
+          <span class="user-card__badge badge badge--{{ user.risk_class === 'success' ? 'success' : user.risk_class === 'danger' ? 'danger' : 'warning' }}">
+            {{ user.risk_badge }}
+          </span>
+        </div>
+        @if (isActive(user)) {
+          <span class="user-card__check">✓</span>
+        }
+      </button>
+    }
+  </div>
+</div>

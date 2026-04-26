@@ -8,7 +8,9 @@ import { ChatTabComponent } from '../tabs/chat-tab/chat-tab';
 import { SpendingTabComponent } from '../tabs/spending-tab/spending-tab';
 import { ProfileTabComponent } from '../tabs/profile-tab/profile-tab';
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner';
+import { UserSelectorComponent } from '../../../shared/components/user-selector/user-selector';
 import { Lifestyle } from '../../../core/models/user-profile.model';
+import { DEMO_USERS } from '../../../core/data/mock-users';
 
 export type Tab = 'home' | 'chat' | 'spending' | 'profile';
 
@@ -19,7 +21,7 @@ export type Tab = 'home' | 'chat' | 'spending' | 'profile';
     CommonModule,
     HomeTabComponent, ChatTabComponent,
     SpendingTabComponent, ProfileTabComponent,
-    LoadingSpinnerComponent,
+    LoadingSpinnerComponent, UserSelectorComponent,
   ],
   templateUrl: './user-view.page.html',
   styleUrl: './user-view.page.scss'
@@ -29,7 +31,8 @@ export class UserViewPageComponent implements OnInit {
   ctx   = inject(UserContextService);
   theme = inject(ThemeService);
 
-  activeTab = signal<Tab>('home');
+  activeTab     = signal<Tab>('home');
+  showSelector  = signal(false);
 
   tabs: { id: Tab; icon: string; label: string }[] = [
     { id: 'home',     icon: '🏠', label: 'Inicio'  },
@@ -51,7 +54,7 @@ export class UserViewPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ctx.setContext(MOCK_CONTEXT);
+    this.ctx.setContext(DEMO_USERS[0].context);  // Carlos por default
     this.ctx.setLoading(false);
     this.api.getUserContext(this.ctx.userId()).subscribe({
       next: (res) => this.ctx.setContext(res),
@@ -59,62 +62,3 @@ export class UserViewPageComponent implements OnInit {
     });
   }
 }
-
-// ── MOCK ─────────────────────────────────────────────────────
-const MOCK_CONTEXT = {
-  profile: {
-    user_id: 'USR-00042',
-    name: 'Carlos',
-    segment_name: 'Inversor Digital Premium',
-    segment_emoji: '💎',
-    risk_level: 'bajo' as const,
-    credit_profile: 'saludable' as const,
-    score_compuesto: 0.82,
-    cluster_id: 1,
-    persona: {
-      risk_profile:  'Moderado'            as const,
-      wealth_tier:   'Establecido'         as const,
-      lifestyle:     'Tech/Digital native' as const,
-      engagement:    'Power user'          as const,
-      conv_style:    'Goal-driven'         as const,
-    },
-    features: {
-      edad: 38, ingreso_mensual_mxn: 45000, score_buro: 740,
-      dias_sin_login: 3, es_hey_pro: true, num_productos_activos: 4,
-      satisfaccion: 9.0, antiguedad_dias: 963,
-    },
-    top_topics: [
-      { topic: 'transferencias_app', weight: 0.31 },
-      { topic: 'productos_hey',      weight: 0.22 },
-      { topic: 'solicitud_credito',  weight: 0.15 },
-    ],
-    spending_summary: [
-      { category: 'Servicios digitales', amount: 3200, percentage: 34, icon: '📱' },
-      { category: 'Restaurantes',        amount: 2100, percentage: 22, icon: '🍽️' },
-      { category: 'Viajes',              amount: 1150, percentage: 12, icon: '✈️' },
-      { category: 'Supermercado',        amount: 950,  percentage: 10, icon: '🛒' },
-      { category: 'Entretenimiento',     amount: 720,  percentage: 8,  icon: '🎬' },
-    ],
-    cashback_acumulado: 294,
-    productos_activos: ['cuenta_debito', 'tarjeta_credito_hey', 'inversion_hey', 'seguro_vida'],
-  },
-  alerts: [
-    { id: 'a1', type: 'info' as const,
-      title: 'Rendimiento de inversión',
-      message: 'Tu inversión Hey generó $1,240 este mes. GAT actual: 10.5%' },
-    { id: 'a2', type: 'warning' as const,
-      title: 'Cargos recurrentes',
-      message: '3 suscripciones digitales sin usar. Podrías ahorrar $849/mes.' },
-  ],
-  havi_greeting: '¡Hola Carlos! 👋 Tu inversión creció 2.1% y tienes $294 en cashback. ¿En qué te ayudo hoy?',
-  recommendations: [
-    { id: 'r1', product: 'Hey Pro', icon: '⭐',
-      title: 'Maximiza tu cashback',
-      description: 'Con Hey Pro ganas 1% en todas tus compras. Este mes: $95 extra.',
-      cta: 'Ver beneficios' },
-    { id: 'r2', product: 'Seguro de Vida', icon: '🛡️',
-      title: 'Protege lo que más importa',
-      description: 'Basado en tu patrimonio, amplía tu cobertura.',
-      cta: 'Cotizar' },
-  ],
-};
