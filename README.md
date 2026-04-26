@@ -112,3 +112,61 @@ Este perfil se serializa como Markdown y se inyecta como contexto en el LLM para
 | Definición y alcance de objetivos | 15 pts |
 | Presentación y comunicación | 15 pts |
 | **Total** | **100 pts** |
+
+# Documentación de Nuevas Características
+
+Este documento lista las nuevas características ingenierizadas en `Feature_Engineering.ipynb`, excluyendo las características originales del conjunto de datos.
+
+## Características del Conjunto de Datos de Clientes
+- `age_band`: Agrupa la edad en categorías (18-25, 26-35, 36-50, 51+).
+- `income_tier`: Grupos basados en cuantiles del ingreso en Q1-Q4.
+- `engagement_score`: Promedio normalizado de frecuencia de login, satisfacción, estatus Hey Pro y bandera de depósito directo.
+- `digital_maturity`: Promedio de puntuación de canal, puntuación de preferencia y frecuencia de login normalizada.
+- `vulnerability_flag`: Bandera booleana para remesas, desempleo o estrato de ingreso bajo.
+- `financial_sophistication`: Promedio de educación normalizada, proxy de inversión y puntuación crediticia.
+
+## Características del Conjunto de Datos de Productos
+- `product_diversity_score`: Conteo de tipos únicos de productos por usuario.
+- `has_credit`: Booleano si el usuario tiene productos de crédito (tarjeta_credito_hey, credito_personal, etc.).
+- `avg_credit_utilization`: Promedio del porcentaje de utilización de crédito para productos de crédito.
+- `max_credit_limit`: Límite máximo de crédito a través de productos.
+- `has_investment`: Booleano si el usuario tiene producto de inversión con saldo > 0.
+- `has_insurance`: Booleano si el usuario tiene productos de seguro.
+- `secured_card_flag`: Booleano si el usuario tiene tarjeta de crédito garantizada.
+- `portfolio_age_days`: Días desde la fecha de apertura más temprana del producto.
+- `credit_product_count`: Conteo de productos de crédito.
+- `investment_balance`: Suma de saldos en productos de inversión.
+
+## Características del Conjunto de Datos de Transacciones
+- `monthly_avg_spend`: Promedio de gastos totales mensuales.
+- `txn_frequency`: Frecuencia promedio mensual de transacciones.
+- `avg_ticket_size`: Monto promedio de transacción.
+- `spend_volatility`: Coeficiente de variación de gastos mensuales.
+- `failed_txn_rate`: Proporción de transacciones fallidas.
+- `retry_rate`: Proporción de reintentos (intento_numero > 1).
+- `dispute_rate`: Proporción de transacciones disputadas.
+- `pct_supermercado`: Porcentaje de gasto en categoría de supermercado.
+- `pct_restaurante`: Porcentaje de gasto en categoría de restaurante.
+- `pct_entretenimiento`: Porcentaje de gasto en categoría de entretenimiento.
+- `pct_viajes`: Porcentaje de gasto en categoría de viajes.
+- `pct_educacion`: Porcentaje de gasto en categoría de educación.
+- `pct_salud`: Porcentaje de gasto en categoría de salud.
+- `pct_tecnologia`: Porcentaje de gasto en categoría de tecnología.
+- `pct_servicios_digitales`: Porcentaje de gasto en categoría de servicios digitales.
+- `pct_ropa_accesorios`: Porcentaje de gasto en categoría de ropa/accesorios.
+- `pct_transporte`: Porcentaje de gasto en categoría de transporte.
+- `pct_hogar`: Porcentaje de gasto en categoría de hogar.
+- `msi_usage_rate`: Proporción de compras con mensualidades.
+- `avg_msi_months`: Meses promedio de mensualidades para aquellos con MSI.
+- `cashback_total`: Suma de cashback generado.
+- `recurring_charge_count`: Conteo de cargos recurrentes.
+- `night_owl_score`: Proporción de transacciones por la noche (22-5).
+- `weekend_spend_ratio`: Gasto en fin de semana / gasto total.
+- `peak_hour`: Hora más frecuente de transacción.
+- `recency_days`: Días desde la última transacción completada.
+- `international_txn_rate`: Proporción de transacciones internacionales.
+- `city_diversity`: Número de ciudades únicas de transacción.
+- `cash_dependency`: Proporción de transacciones relacionadas con efectivo.
+- `digital_payment_rate`: Proporción a través de canales digitales.
+- `atypical_txn_rate`: Proporción de transacciones atípicas.
+- `large_txn_count`: Conteo de transacciones por encima del percentil 95 de los montos del usuario.
