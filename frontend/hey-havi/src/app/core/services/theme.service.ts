@@ -4,9 +4,7 @@ export type Theme = 'dark' | 'light';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
-  private _theme = signal<Theme>(
-    (localStorage.getItem('hey-theme') as Theme) ?? 'dark'
-  );
+  private _theme = signal<Theme>('dark'); // siempre oscuro por defecto para el demo
 
   theme = this._theme.asReadonly();
   isDark = () => this._theme() === 'dark';

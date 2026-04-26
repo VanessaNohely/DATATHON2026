@@ -13,7 +13,6 @@ import { UserContextService } from '../../../core/services/user-context.service'
 export class UserSelectorComponent {
   ctx   = inject(UserContextService);
   close = output<void>();
-
   users = DEMO_USERS;
 
   select(user: UserOption): void {
@@ -24,3 +23,5 @@ export class UserSelectorComponent {
 
   isActive(user: UserOption): boolean {
     return this.ctx.userId() === user.user_id;
+  }
+}

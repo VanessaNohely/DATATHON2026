@@ -11,7 +11,7 @@ import {
   combineLatest2 as combineLatest,
   combineLatestAll,
   combineLatestWith,
-  concat,
+  concat2 as concat,
   concatAll,
   concatMap,
   concatMapTo,
@@ -112,7 +112,7 @@ import {
   zip,
   zipAll,
   zipWith
-} from "./chunk-QCVGHOGP.js";
+} from "./chunk-T2UPE7AW.js";
 export {
   audit,
   auditTime,

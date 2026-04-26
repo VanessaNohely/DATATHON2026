@@ -162,4 +162,26 @@ def _rule_based(message: str, context: str) -> tuple[str, list[str]]:
         return (f"Tu score buró es {score}. Pagar a tiempo y reducir utilización son los pasos clave para mejorarlo.",
                 ["¿Cómo mejorar mi score?", "Ver mis productos"])
 
-    if any(w in msg for w in ["gasto", "c
+    if any(w in msg for w in ["gasto", "compra", "categoría", "mes"]):
+        return ("Puedes ver el desglose completo de tus gastos en la pestaña 'Gastos'. ¿Te explico alguna categoría?",
+                ["Ver todos mis gastos", "¿Cómo ahorrar más?"])
+
+    if any(w in msg for w in ["hola", "buenos", "buenas", "hi"]):
+        return ("¡Hola! Puedo ayudarte con tu cashback, inversiones, gastos o score buró. ¿Por dónde empezamos?",
+                ["¿Cuánto cashback tengo?", "¿Cómo está mi score?", "Ver mis gastos"])
+
+    return (f"Puedo ayudarte con tu cashback (${cashback}), gastos, score ({score}) e inversiones. ¿Sobre cuál te gustaría saber?",
+            ["¿Cuánto cashback tengo?", "¿Cómo está mi score?", "Ver mis gastos"])
+
+
+def _extract(ctx: str, prefix: str, suffix: str) -> str:
+    try:
+        s = ctx.index(prefix) + len(prefix)
+        e = ctx.index(suffix, s)
+        return ctx[s:e]
+    except ValueError:
+        return "0"
+
+
+def _default_suggestions() -> list[str]:
+    return ["¿Cuánto cashback tengo?", "Ver mis gastos", "¿Cómo está mi score?"]

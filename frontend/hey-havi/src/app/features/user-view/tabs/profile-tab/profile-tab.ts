@@ -13,12 +13,22 @@ export class ProfileTabComponent {
   ctx = inject(UserContextService);
 
   dimensions = [
-    { key: 'risk_profile',  label: 'Perfil de riesgo',         icon: '🎯', colorClass: 'info'    },
-    { key: 'wealth_tier',   label: 'Estrato de riqueza',        icon: '💰', colorClass: 'success' },
-    { key: 'lifestyle',     label: 'Spending lifestyle',        icon: '🛒', colorClass: 'coral'   },
-    { key: 'engagement',    label: 'Engagement digital',        icon: '⚡', colorClass: 'warning' },
-    { key: 'conv_style',    label: 'Perfil conversacional',     icon: '💬', colorClass: 'muted'   },
+    { key: 'risk_profile', label: 'Perfil de riesgo',     icon: '🎯', colorClass: 'info'    },
+    { key: 'wealth_tier',  label: 'Estrato de riqueza',   icon: '💰', colorClass: 'success' },
+    { key: 'lifestyle',    label: 'Spending lifestyle',   icon: '🛒', colorClass: 'coral'   },
+    { key: 'engagement',   label: 'Engagement digital',   icon: '⚡', colorClass: 'warning' },
+    { key: 'conv_style',   label: 'Perfil conversacional',icon: '💬', colorClass: 'muted'   },
   ] as const;
 
-  // Traducciones de valores en inglés (backend) a español (UI)
-  private readonly LABELS: Record<str
+  private readonly LABELS: Record<string, string> = {
+    'Conservative': 'Conservador', 'Moderate': 'Moderado',
+    'Aggressive': 'Emprendedor',   'Distressed': 'Estresado',
+    'Entry': 'Bajo',               'Growing': 'Crecimiento',
+    'Established': 'Establecido',  'Affluent': 'Afluente',
+  };
+
+  getVal(key: string): string {
+    const raw = (this.ctx.profile()?.persona as any)?.[key] ?? '—';
+    return this.LABELS[raw] ?? raw;
+  }
+}

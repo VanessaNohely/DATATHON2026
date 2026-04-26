@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { UserViewPageComponent } from './features/user-view/pages/user-view.page';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [UserViewPageComponent],
-  template: '<app-user-view-page />',
-  styles: [':host { display: block; m
+  imports: [RouterOutlet],
+  template: '<router-outlet />',
+  styles: [':host { display: block; height: 100%; }']
+})
+export class AppComponent {}
