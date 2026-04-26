@@ -49,10 +49,6 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 
-package-lock.json
-
-environments/
-
 #python
 __pycache__/
 venv/
